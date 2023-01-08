@@ -8,8 +8,8 @@ export default class UserController {
   async register(req: Request, res: Response) {
     const user = req.body as IUser;
 
-    const createdUser = await this.userService.register(user);
+    await this.userService.register(user);
 
-    return res.json({ createdUser });
+    return res.status(201).json({ message: 'User created successfully.' });
   }
 }
