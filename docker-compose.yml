@@ -1,0 +1,32 @@
+version: '3.9'
+services:
+  blog_api:
+    container_name: blog_api
+    build: .
+    ports:
+      - 3001:3001
+    command: npm run dev
+    volumes: 
+      - ./src:/app/src
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - API_PORT=3001
+      - DB_USERNAME=root
+      - DB_PASSWORD=password
+      - DB_HOST=db
+      - DB_PORT=3306
+  db:
+    image: mysql:8.0.21
+    container_name: db
+    ports:
+      - 3002:3306
+    environment:
+      - MYSQL_DATABASE=blog-db
+      - MYSQL_ROOT_PASSWORD=password
+    restart: 'always'
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 5
