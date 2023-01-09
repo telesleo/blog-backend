@@ -1,9 +1,12 @@
+import 'dotenv/config';
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
+import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 import AppError from '../errors/appError';
 import User from '../database/models/user-model';
 import IUser from '../interfaces/IUser';
+import ILogin from '../interfaces/ILogin';
 
 export default class UserService {
   constructor(private userModel: typeof User) { }
@@ -33,5 +36,17 @@ export default class UserService {
     const hashedPassword = await bcrypt.hash(userData.password, 10);
 
     await this.userModel.create({ ...userData, password: hashedPassword });
+  }
+
+  async login(loginData: ILogin): Promise<string> {
+    const user = await this.userModel.findOne({ where: { email: loginData.email } });
+
+    if (!user || !(await bcrypt.compare(loginData.password, user.password))) {
+      throw new AppError('Invalid email or password.', 401);
+    }
+
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET as string, { expiresIn: '7d' });
+
+    return token;
   }
 }
