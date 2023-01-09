@@ -5,7 +5,7 @@ module.exports = {
         id: 1,
         title: '5 Simple Habits to Boost Your Productivity',
         description: 'In this post, I share five simple habits that have helped me boost my productivity and get more done in a day. These habits include making a to-do list, setting small goals, taking breaks, limiting distractions, and finding my most productive time of day.',
-        authorId: 1,
+        author_id: 1,
         content: `Hi everyone!
 
 Today, I wanted to share with you some simple habits that have helped me boost my productivity and get more done in a day. These habits are easy to incorporate into your routine, and they can make a big difference in your ability to focus and get things done.
@@ -32,7 +32,7 @@ Cezar`,
         id: 2,
         title: '10 Must-Visit Foodie Destinations Around the World',
         description: 'In this post, I share 10 must-visit foodie destinations that I think everyone should visit at least once. These destinations include Tokyo, New Orleans, Barcelona, Bologna, and more. I highlight the unique food and drink specialties of each destination and offer recommendations for places to visit.',
-        authorId: 2,
+        author_id: 2,
         content: `As a food lover and travel enthusiast, I am always on the lookout for new and exciting places to eat and drink. In this post, I wanted to share with you some of my top foodie destinations around the world that I think everyone should visit at least once.
 
 Tokyo, Japan: From the bustling streets of Tsukiji fish market to the Michelin-starred sushi restaurants, Tokyo is a paradise for foodies. Don't miss the chance to try out some of the city's famous street food, like takoyaki (octopus balls) and okonomiyaki (savory pancakes).
@@ -49,7 +49,7 @@ Bologna, Italy: The capital of Italy's Emilia-Romagna region, Bologna is known f
         id: 3,
         title: '5 Tips for Staying Motivated and Productive While Working from Home',
         description: 'In this post, I share my personal tips for staying motivated and productive while working from home. I recommend creating a dedicated workspace, setting boundaries, taking breaks, setting goals and priorities, and finding a routine that works for you. These strategies have helped me stay focused and avoid distractions while working from home.',
-        authorId: 2,
+        author_id: 2,
         content: `As someone who works from home, I know firsthand how challenging it can be to stay motivated and productive. It's easy to get distracted by household chores, social media, and other distractions, and it can be hard to find a balance between work and leisure.
 
 In this post, I wanted to share with you some tips that have helped me stay motivated and productive while working from home.
