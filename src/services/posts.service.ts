@@ -1,4 +1,7 @@
+import { plainToClass } from 'class-transformer';
+import { validate } from 'class-validator';
 import 'dotenv/config';
+import AppError from '../errors/appError';
 import Post from '../database/models/post-model';
 import User from '../database/models/user-model';
 import IPost from '../interfaces/IPost';
@@ -15,5 +18,15 @@ export default class PostService {
     });
 
     return posts;
+  }
+
+  async create(postData: IPost) {
+    const post = plainToClass(Post, postData);
+    const errors = await validate(post);
+    if (errors.length > 0) {
+      throw new AppError(`Invalid ${errors[0].property}.`, 400);
+    }
+
+    await this.postModel.create({ ...postData });
   }
 }
