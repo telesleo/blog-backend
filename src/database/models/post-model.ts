@@ -1,13 +1,33 @@
 import { Model, INTEGER, STRING } from 'sequelize';
+import {
+  IsNotEmpty, MinLength, MaxLength, IsOptional, IsInt, Matches,
+} from 'class-validator';
 import db from '.';
 
 import User from './user-model';
 
 class Post extends Model {
   public id?: number;
+
+  @MinLength(3)
+  @MaxLength(128)
+  @IsNotEmpty()
+  @Matches(/^[a-zA-Z]+(?:[ ]{1}[a-zA-Z]+)*$/)
   public title!: string;
+
+  @IsOptional()
+  @MinLength(3)
+  @MaxLength(512)
+  @IsNotEmpty()
+  @Matches(/^[a-zA-Z0-9#&*@]*(?:[ ]{1}[a-zA-Z0-9#&*@]*)*$/)
   public description?: string;
+
+  @IsInt()
+  @IsNotEmpty()
   public authorId!: number;
+
+  @MinLength(64)
+  @MaxLength(16384)
   public content!: string;
 }
 
