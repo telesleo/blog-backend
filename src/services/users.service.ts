@@ -45,7 +45,7 @@ export default class UserService {
       throw new AppError('Invalid email or password.', 401);
     }
 
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET as string, { expiresIn: '7d' });
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET as string, { expiresIn: '7d' });
 
     return token;
   }
