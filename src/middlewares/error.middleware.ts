@@ -5,7 +5,7 @@ function errorHandler(error: AppError, _req: Request, res: Response, next: NextF
   if (error.status) {
     res.status(error.status).json({ message: error.message });
   } else {
-    res.status(500).send({ message: 'Internal server error.' });
+    res.status(500).send({ message: error.message });
   }
 
   next();
