@@ -22,10 +22,18 @@ export default class UserController {
     return res.status(200).json({ token });
   }
 
+  async validate(req: Request, res: Response) {
+    const { user } = req;
+
+    const data = await this.userService.getById(user?.id);
+
+    return res.status(200).json(data);
+  }
+
   async getById(req: Request, res: Response) {
     const { id } = req.params;
 
-    const user = await this.userService.getById(parseInt(id));
+    const user = await this.userService.getById(parseInt(id), true);
 
     return res.status(200).json(user);
   }

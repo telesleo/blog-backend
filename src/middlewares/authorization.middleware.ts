@@ -6,12 +6,16 @@ import IUser from '../interfaces/IUser';
 export default function authMiddleware(req: Request, res: Response, next: NextFunction) {
   const token = req.headers.authorization as string;
 
-  const user = jwt.verify(token, process.env.JWT_SECRET as string) as IUser;
+  if (!token) {
+    res.status(401).json({ message: 'Access token is missing.' });
+    return;
+  }
 
-  req.user = user;
-
-  if (!user.id) {
-    res.status(401).json({ message: 'User not authorized.' });
+  try {
+    const user = jwt.verify(token, process.env.JWT_SECRET as string) as IUser;
+    req.user = user;
+  } catch(error: any) {
+    res.status(401).json({ message: 'Invalid token.' });
     return;
   }
 
