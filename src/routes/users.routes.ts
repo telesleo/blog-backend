@@ -12,6 +12,6 @@ const userController = new UserController(new UserService(User));
 router.post('/register', userController.register.bind(userController));
 router.post('/login', userController.login.bind(userController));
 router.post('/validate', authMiddleware, userController.validate.bind(userController));
-router.get('/:id', userController.getById.bind(userController));
+router.get('/:username', userController.getByUsername.bind(userController));
 
 export default router;

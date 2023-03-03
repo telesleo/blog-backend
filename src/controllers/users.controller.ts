@@ -30,10 +30,10 @@ export default class UserController {
     return res.status(200).json(data);
   }
 
-  async getById(req: Request, res: Response) {
-    const { id } = req.params;
+  async getByUsername(req: Request, res: Response) {
+    const { username } = req.params;
 
-    const user = await this.userService.getById(parseInt(id), true);
+    const user = await this.userService.getByUsername(username);
 
     return res.status(200).json(user);
   }
