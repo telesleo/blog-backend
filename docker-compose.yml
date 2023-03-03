@@ -18,6 +18,7 @@ services:
       - DB_PASSWORD=password
       - DB_HOST=db
       - DB_PORT=3306
+      - ORIGIN=http://localhost:3000
   db:
     image: mysql:8.0.21
     container_name: db
