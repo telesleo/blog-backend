@@ -11,6 +11,7 @@ const router = express.Router();
 const postController = new PostController(new PostService(Post));
 
 router.get('/', postController.getAll.bind(postController));
+router.get('/:id', postController.getById.bind(postController));
 router.post('/', authMiddleware, postController.create.bind(postController));
 
 export default router;

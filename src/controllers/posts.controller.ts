@@ -11,6 +11,14 @@ export default class PostController {
     return res.status(200).json(posts);
   }
 
+  async getById(req: Request, res: Response) {
+    const { id } = req.params;
+
+    const post = await this.postService.getById(parseInt(id, 10));
+
+    return res.status(200).json(post);
+  }
+
   async create(req: Request, res: Response) {
     const post = req.body as IPost;
 

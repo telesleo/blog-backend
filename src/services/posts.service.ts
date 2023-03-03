@@ -7,17 +7,32 @@ import User from '../database/models/user-model';
 import IPost from '../interfaces/IPost';
 
 export default class PostService {
-  constructor(private postModel: typeof Post) { }
+  postQueryOptions = {};
+
+  constructor(private postModel: typeof Post) {
+    this.postQueryOptions = {
+      attributes: ['id', 'title', 'author_id', 'description', 'content', 'created_at', 'updated_at'],
+      include: { model: User, as: 'author', attributes: ['username', 'name', 'about'] },
+    };
+  }
 
   async getAll(): Promise<IPost[]> {
     const posts = await this.postModel.findAll({
-      attributes: ['id', 'title', 'author_id', 'description', 'content', 'created_at', 'updated_at'],
+      ...this.postQueryOptions,
       order: [['createdAt', 'DESC']],
       limit: 20,
-      include: { model: User, as: 'author', attributes: ['username', 'name', 'about'] },
     });
 
     return posts;
+  }
+
+  async getById(id: number): Promise<IPost> {
+    const post = await this.postModel.findOne({
+      ...this.postQueryOptions,
+      where: { id },
+    }) as IPost;
+
+    return post;
   }
 
   async create(postData: IPost) {
