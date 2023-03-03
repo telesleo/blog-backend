@@ -5,6 +5,7 @@ import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 import AppError from '../errors/appError';
 import User from '../database/models/user-model';
+import Post from '../database/models/post-model';
 import IUser from '../interfaces/IUser';
 import ILogin from '../interfaces/ILogin';
 
@@ -48,5 +49,18 @@ export default class UserService {
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET as string, { expiresIn: '7d' });
 
     return token;
+  }
+
+  async getById(id: number): Promise<IUser | null> {
+    const user = await this.userModel.findOne({ 
+      where: { id },
+      attributes: ['id', 'username', 'name', 'about', 'createdAt', 'updatedAt'],
+      include: { 
+        model: Post, 
+        as: 'posts', 
+        attributes: ['id', 'title', 'description', "createdAt", "updatedAt" ] },
+     });
+
+    return user;
   }
 }
