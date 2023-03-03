@@ -51,15 +51,21 @@ export default class UserService {
     return token;
   }
 
-  async getById(id: number): Promise<IUser | null> {
-    const user = await this.userModel.findOne({ 
+  async getById(id: number, includePosts: boolean = false): Promise<IUser | null> {
+    const options: any = {
       where: { id },
       attributes: ['id', 'username', 'name', 'about', 'createdAt', 'updatedAt'],
-      include: { 
+    }
+
+    if (includePosts) {
+      options.include = {
         model: Post, 
         as: 'posts', 
-        attributes: ['id', 'title', 'description', "createdAt", "updatedAt" ] },
-     });
+        attributes: ['id', 'title', 'description', "createdAt", "updatedAt" ]
+      };
+    }
+    
+    const user = await this.userModel.findOne(options);
 
     return user;
   }
