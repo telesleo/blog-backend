@@ -12,14 +12,14 @@ class Post extends Model {
   @MinLength(3)
   @MaxLength(128)
   @IsNotEmpty()
-  @Matches(/^[a-zA-Z]+(?:[ ]{1}[a-zA-Z]+)*$/)
+  @Matches(/^[\p{L}]+(?:[ ]{1}[\p{L}]+)*$/u)
   public title!: string;
 
   @IsOptional()
   @MinLength(3)
   @MaxLength(512)
   @IsNotEmpty()
-  @Matches(/^[a-zA-Z0-9#&*@]*(?:[ ]{1}[a-zA-Z0-9#&*@]*)*$/)
+  @Matches(/^[\p{L}0-9#&@](?:[ ]{1}[\p{L}0-9#&@])*$/u)
   public description?: string;
 
   @IsInt()
