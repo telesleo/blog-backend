@@ -70,7 +70,7 @@ export default class UserService {
   async getById(id: number): Promise<IUser | null> {
     const options: any = {
       where: { id },
-      attributes: ['id', 'username', 'name', 'about', 'createdAt', 'updatedAt'],
+      attributes: ['id', 'email', 'username', 'name', 'about', 'createdAt', 'updatedAt'],
     }
     
     const user = await this.userModel.findOne(options);
