@@ -4,12 +4,13 @@ import 'dotenv/config';
 import AppError from '../errors/appError';
 import Post from '../database/models/post-model';
 import User from '../database/models/user-model';
+import Like from '../database/models/like-model';
 import IPost from '../interfaces/IPost';
 
 export default class PostService {
   postQueryOptions = {};
 
-  constructor(private postModel: typeof Post) {
+  constructor(private postModel: typeof Post, private likeModel: typeof Like) {
     this.postQueryOptions = {
       attributes: ['id', 'title', 'author_id', 'description', 'content', 'created_at', 'updated_at'],
       include: { model: User, as: 'author', attributes: ['username', 'name', 'about'] },
@@ -43,5 +44,9 @@ export default class PostService {
     }
 
     await this.postModel.create({ ...postData });
+  }
+
+  async getLikes(postId: number) {
+    return await this.likeModel.count({ where: { postId }, });
   }
 }

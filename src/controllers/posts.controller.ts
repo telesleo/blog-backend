@@ -28,4 +28,12 @@ export default class PostController {
 
     return res.status(201).json({ message: 'Post created successfully.' });
   }
+
+  async getLikes(req: Request, res: Response) {
+    const postId  = parseInt(req.params.id);
+
+    const likes = await this.postService.getLikes(postId);
+
+    return res.status(200).json({ likes: likes });
+  }
 }
