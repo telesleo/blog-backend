@@ -62,4 +62,18 @@ export default class PostService {
 
     await this.likeModel.create({ ...like });
   }
+
+  async unlike(like: ILike) {
+    const existingLike =  await this.likeModel.findOne(
+      { where: { userId: like.userId, postId: like.postId }, }
+    );
+
+    if (!existingLike) {
+      throw new AppError(`This post has not been liked by this user.`, 404);
+    }
+
+    await this.likeModel.destroy(
+      { where: { userId: like.userId, postId: like.postId }, }
+    );
+  }
 }
