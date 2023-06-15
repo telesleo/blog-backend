@@ -21,5 +21,6 @@ router.post('/:id/likes', authMiddleware, postController.like.bind(postControlle
 router.delete('/:id/likes', authMiddleware, postController.unlike.bind(postController));
 router.get('/:id/liked', authMiddleware, postController.checkIfLiked.bind(postController));
 router.get('/:id/comments', postController.getComments.bind(postController));
+router.post('/:id/comments', authMiddleware, postController.createComment.bind(postController));
 
 export default router;

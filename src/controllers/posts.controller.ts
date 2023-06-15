@@ -71,4 +71,14 @@ export default class PostController {
 
     return res.status(200).json(comments);
   }
+
+  async createComment(req: Request, res: Response) {
+    const postId = parseInt(req.params.id);
+    const userId = parseInt(req.user?.id);
+    const { content } = req.body;
+
+    await this.postService.createComment({ postId, userId, content });
+
+    return res.status(201).json({ message: 'Comment added to the post successfully.' });
+  }
 }

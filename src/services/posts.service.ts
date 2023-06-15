@@ -99,4 +99,16 @@ export default class PostService {
 
     return comments;
   }
+
+  async createComment(commentData: IComment): Promise<IComment | null> {
+    const comment = plainToClass(Comment, commentData);
+    const errors = await validate(comment);
+    if (errors.length > 0) {
+      throw new AppError(`Invalid ${errors[0].property}.`, 400);
+    }
+
+    const commentAdded = await this.commentModel.create({ ...commentData });
+
+    return commentAdded;
+  }
 }
