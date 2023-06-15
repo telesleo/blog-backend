@@ -16,7 +16,7 @@ const postController = new PostController(new PostService(Post, Like, Comment));
 router.get('/', postController.getAll.bind(postController));
 router.get('/:id', postController.getById.bind(postController));
 router.post('/', authMiddleware, postController.create.bind(postController));
-router.get('/:id/likes', authMiddleware, postController.getLikes.bind(postController));
+router.get('/:id/likes', postController.getLikes.bind(postController));
 router.post('/:id/likes', authMiddleware, postController.like.bind(postController));
 router.delete('/:id/likes', authMiddleware, postController.unlike.bind(postController));
 router.get('/:id/liked', authMiddleware, postController.checkIfLiked.bind(postController));
