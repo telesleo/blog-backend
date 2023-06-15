@@ -76,4 +76,12 @@ export default class PostService {
       { where: { userId: like.userId, postId: like.postId }, }
     );
   }
+
+  async getLike(like: ILike): Promise<ILike | null> {
+    const user = await this.likeModel.findOne({
+      where: { userId: like.userId, postId: like.postId }
+    });
+
+    return user;
+  }
 }

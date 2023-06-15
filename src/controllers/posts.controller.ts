@@ -54,4 +54,13 @@ export default class PostController {
 
     return res.status(201).json({ message: 'Like removed from post successfully.' });
   }
+
+  async checkIfLiked(req: Request, res: Response) {
+    const postId  = parseInt(req.params.id);
+    const userId = req.user?.id as number;
+
+    const like = await this.postService.getLike({ postId, userId });
+
+    return res.status(200).json({ liked: (like !== null) });
+  }
 }
