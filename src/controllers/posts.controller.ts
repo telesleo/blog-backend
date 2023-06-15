@@ -36,4 +36,13 @@ export default class PostController {
 
     return res.status(200).json({ likes: likes });
   }
+
+  async like(req: Request, res: Response) {
+    const postId  = parseInt(req.params.id);
+    const userId = req.user?.id as number;
+
+    await this.postService.like({ postId, userId });
+
+    return res.status(201).json({ message: 'Post liked successfully.' });
+  }
 }

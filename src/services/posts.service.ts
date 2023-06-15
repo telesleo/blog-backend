@@ -6,6 +6,7 @@ import Post from '../database/models/post-model';
 import User from '../database/models/user-model';
 import Like from '../database/models/like-model';
 import IPost from '../interfaces/IPost';
+import ILike from '../interfaces/ILike';
 
 export default class PostService {
   postQueryOptions = {};
@@ -48,5 +49,17 @@ export default class PostService {
 
   async getLikes(postId: number) {
     return await this.likeModel.count({ where: { postId }, });
+  }
+
+  async like(like: ILike) {
+    const existingLike =  await this.likeModel.findOne(
+      { where: { userId: like.userId, postId: like.postId }, }
+    );
+
+    if (existingLike) {
+      throw new AppError(`This user has already liked this post.`, 400);
+    }
+
+    await this.likeModel.create({ ...like });
   }
 }
