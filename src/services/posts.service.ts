@@ -7,11 +7,17 @@ import User from '../database/models/user-model';
 import Like from '../database/models/like-model';
 import IPost from '../interfaces/IPost';
 import ILike from '../interfaces/ILike';
+import Comment from '../database/models/comment-model';
+import IComment from '../interfaces/IComment';
 
 export default class PostService {
   postQueryOptions = {};
 
-  constructor(private postModel: typeof Post, private likeModel: typeof Like) {
+  constructor(
+    private postModel: typeof Post,
+    private likeModel: typeof Like,
+    private commentModel: typeof Comment,
+  ) {
     this.postQueryOptions = {
       attributes: ['id', 'title', 'author_id', 'description', 'content', 'created_at', 'updated_at'],
       include: { model: User, as: 'author', attributes: ['username', 'name', 'about'] },
@@ -83,5 +89,14 @@ export default class PostService {
     });
 
     return user;
+  }
+
+  async getComments(postId: number): Promise<IComment[] | null> {
+    const comments = await this.commentModel.findAll({
+      where: { postId },
+      attributes: ['id', 'post_id', 'user_id', 'content', 'created_at', 'updated_at'],
+    });
+
+    return comments;
   }
 }

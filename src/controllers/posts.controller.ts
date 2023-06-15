@@ -63,4 +63,12 @@ export default class PostController {
 
     return res.status(200).json({ liked: (like !== null) });
   }
+
+  async getComments(req: Request, res: Response) {
+    const postId = parseInt(req.params.id);
+
+    const comments = await this.postService.getComments(postId);
+
+    return res.status(200).json(comments);
+  }
 }
