@@ -52,7 +52,7 @@ export default class PostController {
 
     await this.postService.unlike({ postId, userId });
 
-    return res.status(201).json({ message: 'Like removed from post successfully.' });
+    return res.status(200).json({ message: 'Like removed from post successfully.' });
   }
 
   async checkIfLiked(req: Request, res: Response) {
