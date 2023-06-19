@@ -95,6 +95,7 @@ export default class PostService {
     const comments = await this.commentModel.findAll({
       where: { postId },
       attributes: ['id', 'post_id', 'user_id', 'content', 'created_at', 'updated_at'],
+      include: { model: User, as: 'user', attributes: ['username', 'name'] },
     });
 
     return comments;
