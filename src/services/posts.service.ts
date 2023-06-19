@@ -96,6 +96,7 @@ export default class PostService {
       where: { postId },
       attributes: ['id', 'post_id', 'user_id', 'content', 'created_at', 'updated_at'],
       include: { model: User, as: 'user', attributes: ['username', 'name'] },
+      order: [['createdAt', 'DESC']],
     });
 
     return comments;
